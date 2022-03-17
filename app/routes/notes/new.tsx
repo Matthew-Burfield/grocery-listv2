@@ -3,7 +3,7 @@ import { Form, json, redirect, useActionData } from "remix";
 import type { ActionFunction } from "remix";
 import Alert from "@reach/alert";
 
-import { createNote } from "~/models/note.server";
+// import { createNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 
 type ActionData = {
@@ -34,9 +34,10 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const note = await createNote({ title, body, userId });
-
-  return redirect(`/notes/${note.id}`);
+  // const note = await createNote({ title, body, userId });
+  //
+  // return redirect(`/notes/${note.id}`);
+  return json({ success: true });
 };
 
 export default function NewNotePage() {

@@ -24,18 +24,9 @@ async function seed() {
     },
   });
 
-  await prisma.note.create({
+  await prisma.groceryItem.create({
     data: {
-      title: "My first note",
-      body: "Hello, world!",
-      userId: user.id,
-    },
-  });
-
-  await prisma.note.create({
-    data: {
-      title: "My second note",
-      body: "Hello, world!",
+      name: "bananas",
       userId: user.id,
     },
   });

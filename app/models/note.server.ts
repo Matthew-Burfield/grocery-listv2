@@ -1,32 +1,29 @@
 import { prisma } from "~/db.server";
 
-export function getNote({ userId, id }: { userId: string; id: string }) {
-  return prisma.note.findFirst({
-    where: { id, userId },
-  });
-}
-
-export function getNoteListItems({ userId }: { userId: string }) {
-  return prisma.note.findMany({
+export function getGroceryItems({ userId }: { userId: string }) {
+  return prisma.groceryItem.findMany({
     where: { userId: userId },
-    select: { id: true, title: true },
+    select: { id: true, name: true, category: true, isChecked: true },
     orderBy: { updatedAt: "desc" },
   });
 }
 
-export function createNote({
-  title,
-  body,
+export function createGroceryItem({
+  name,
+  category,
+  isChecked,
   userId,
 }: {
-  title: string;
-  body: string;
+  name: string;
+  category?: string;
+  isChecked?: boolean;
   userId: string;
 }) {
-  return prisma.note.create({
+  return prisma.groceryItem.create({
     data: {
-      title,
-      body,
+      name,
+      category,
+      isChecked,
       user: {
         connect: {
           id: userId,
@@ -36,10 +33,16 @@ export function createNote({
   });
 }
 
-export function deleteNote({ id, userId }: { id: string; userId: string }) {
-  return prisma.note.deleteMany({
+export function deleteGroceryIetm({
+  id,
+  userId,
+}: {
+  id: string;
+  userId: string;
+}) {
+  return prisma.groceryItem.deleteMany({
     where: { id, userId },
   });
 }
 
-export type { Note } from "@prisma/client";
+export type { GroceryItem } from "@prisma/client";
