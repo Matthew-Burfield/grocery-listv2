@@ -57,11 +57,7 @@ export default function Index() {
         {data.groceryItems
           .filter((item) => !item.isChecked)
           .map((item) => (
-            <GroceryItem
-              key={item.id}
-              name={item.name}
-              isChecked={item.isChecked}
-            />
+            <GroceryItem key={item.id} {...item} />
           ))}
       </ul>
       <Form replace method="post" ref={formRef}>
@@ -77,7 +73,7 @@ export default function Index() {
           .filter((item) => item.isChecked)
           .map((item) => (
             <li key={item.id}>
-              <li key={item.id}>{item.name}</li>
+{item.name}
             </li>
           ))}
       </ul>
