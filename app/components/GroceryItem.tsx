@@ -18,7 +18,7 @@ export function GroceryItem({
       <Form replace method="post">
         <input type="hidden" name="id" value={id} />
         <button type="submit" aria-label={action} name="_action" value={action}>
-          ✔️
+          <input type="checkbox" defaultChecked={isChecked} className="pointer-events-none" />
         </button>
         {name}
         <button

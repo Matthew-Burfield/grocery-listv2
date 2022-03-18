@@ -72,9 +72,7 @@ export default function Index() {
         {data.groceryItems
           .filter((item) => item.isChecked)
           .map((item) => (
-            <li key={item.id}>
-{item.name}
-            </li>
+            <GroceryItem key={item.id} {...item} />
           ))}
       </ul>
       <FloatingQuickAddMenu />
