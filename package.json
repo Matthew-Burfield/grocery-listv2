@@ -33,6 +33,8 @@
     "/public/build"
   ],
   "dependencies": {
+    "@floating-ui/react-dom": "^0.6.0",
+    "@headlessui/react": "^1.5.0",
     "@node-rs/bcrypt": "^1.6.0",
     "@prisma/client": "^3.11.0",
     "@reach/alert": "^0.16.0",

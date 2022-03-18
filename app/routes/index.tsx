@@ -4,6 +4,7 @@ import { requireUserId } from "~/session.server";
 import { getGroceryItems } from "~/models/note.server";
 // import { useUser } from "~/utils";
 import React from "react";
+import FloatingQuickAddMenu from "~/components/FloatingQuickAddMenu";
 
 type LoaderData = {
   groceryItems: Awaited<ReturnType<typeof getGroceryItems>>;
@@ -45,6 +46,7 @@ export default function Index() {
             </li>
           ))}
       </ul>
+      <FloatingQuickAddMenu />
     </main>
   );
 }
