@@ -1,4 +1,5 @@
 import { prisma } from "~/db.server";
+import { Prisma } from "@prisma/client";
 
 export function getGroceryItems({ userId }: { userId: string }) {
   return prisma.groceryItem.findMany({
@@ -30,6 +31,19 @@ export function createGroceryItem({
         },
       },
     },
+  });
+}
+
+export function updateGroceryItem({
+  id,
+  data,
+}: {
+  id: string;
+  data: Prisma.GroceryItemUpdateInput;
+}) {
+  return prisma.groceryItem.update({
+    data,
+    where: { id },
   });
 }
 

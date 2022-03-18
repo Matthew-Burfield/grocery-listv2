@@ -3,7 +3,7 @@ import type { LoaderFunction } from "remix";
 
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
-import { getGroceryItems } from "~/models/note.server";
+import { getGroceryItems } from "~/models/grocery-item.server";
 
 type LoaderData = {
   groceryItems: Awaited<ReturnType<typeof getGroceryItems>>;
