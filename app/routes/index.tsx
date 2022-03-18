@@ -10,6 +10,7 @@ import {
 // import { useUser } from "~/utils";
 import React from "react";
 import FloatingQuickAddMenu from "~/components/FloatingQuickAddMenu";
+import { GroceryItem } from "~/components/GroceryItem";
 
 type LoaderData = {
   groceryItems: Awaited<ReturnType<typeof getGroceryItems>>;
@@ -56,7 +57,11 @@ export default function Index() {
         {data.groceryItems
           .filter((item) => !item.isChecked)
           .map((item) => (
-            <li key={item.id}>{item.name}</li>
+            <GroceryItem
+              key={item.id}
+              name={item.name}
+              isChecked={item.isChecked}
+            />
           ))}
       </ul>
       <Form replace method="post" ref={formRef}>
