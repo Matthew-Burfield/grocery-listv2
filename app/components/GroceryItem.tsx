@@ -14,7 +14,7 @@ export function GroceryItem({
   const action = isChecked ? "uncheck" : "check";
 
   return (
-    <li>
+    <li aria-label={name}>
       <Form replace method="post">
         <input type="hidden" name="id" value={id} />
         <button type="submit" aria-label={action} name="_action" value={action}>

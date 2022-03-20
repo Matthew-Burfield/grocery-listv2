@@ -53,6 +53,7 @@ export default function Index() {
   const formRef = React.useRef<HTMLFormElement>(null);
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
+      <h1>Grocery List</h1>
       <ul>
         {data.groceryItems
           .filter((item) => !item.isChecked)
