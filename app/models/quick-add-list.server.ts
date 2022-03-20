@@ -1,13 +1,17 @@
 import { prisma } from "~/db.server";
-import { Prisma } from "@prisma/client";
 
-// export function getGroceryItems({ userId }: { userId: string }) {
-//   return prisma.groceryItem.findMany({
-//     where: { userId: userId },
-//     select: { id: true, name: true, category: true, isChecked: true },
-//     orderBy: { updatedAt: "desc" },
-//   });
-// }
+export function getQuickAddList({
+  userId,
+  id,
+}: {
+  userId: string;
+  id: string;
+}) {
+  return prisma.quickAddList.findFirst({
+    where: { id, userId },
+    select: { id: true, name: true, items: true },
+  });
+}
 
 export function createQuickAddList({
   name,
