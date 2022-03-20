@@ -8,7 +8,9 @@ export default function FloatingQuickAddMenu() {
   });
   return (
     <Popover className="absolute right-10 bottom-10">
-      <Popover.Button aria-label="menu" ref={reference}>+</Popover.Button>
+      <Popover.Button aria-label="menu" ref={reference}>
+        +
+      </Popover.Button>
       <Popover.Panel
         ref={floating}
         // className="w-52 flex flex-col"
