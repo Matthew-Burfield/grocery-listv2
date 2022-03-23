@@ -1,4 +1,5 @@
-import { Form, json, useFetcher, useLoaderData } from "remix";
+import { useState } from "react";
+import { json, useFetcher, useLoaderData } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import invariant from "tiny-invariant";
 import { getQuickAddList } from "~/models/quick-add-list.server";
@@ -54,12 +55,6 @@ export const action: ActionFunction = async ({ request, params }) => {
           quickAddListId: params.listId,
         });
       }
-      // case "check": {
-      //   return updateGroceryItem({ id, data: { isChecked: true } });
-      // }
-      // case "uncheck": {
-      //   return updateGroceryItem({ id, data: { isChecked: false } });
-      // }
       case "delete": {
         return deleteQuickAddListItem({ id });
       }
@@ -69,33 +64,80 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function QuickAddDetailsPage() {
   const data = useLoaderData<LoaderData>();
+  const fetcher = useFetcher();
+  const [checkedIds, setCheckedIds] = useState<Set<string>>(new Set());
+
+  const onCheckItem = (id: string) => {
+    setCheckedIds((prevCheckedItems: Set<string>) => {
+      if (prevCheckedItems.has(id)) {
+        const newSet = prevCheckedItems;
+        newSet.delete(id);
+        return newSet;
+      }
+      return prevCheckedItems.add(id);
+    });
+  };
+
+  const handleAddCheckedItems = () => {
+    const checkedItems = [...checkedIds]
+      .map((id) => {
+        const item = data.quickAddList.items.find((item) => item.id === id);
+        if (item) {
+          return { id: item.id, name: item.name, category: item.category };
+        }
+        // This might happen if the item was deleted after being checked
+        return void 0;
+      })
+      .filter((item) => item !== void 0);
+
+    const formData = new FormData();
+    formData.append("_action", "create_many");
+    formData.append("checkedItems", JSON.stringify(checkedItems));
+    fetcher.submit(formData, { method: "post", action: "/?index", replace: false });
+  };
+
   return (
     <>
       <h2>{data.quickAddList.name}</h2>
       <ul>
         {data.quickAddList.items.map((item) => (
-          <QuickAddItem key={item.id} id={item.id} name={item.name} />
+          <QuickAddItem
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            onCheckItem={onCheckItem}
+          />
         ))}
       </ul>
-      <Form replace method="post">
+      <fetcher.Form replace method="post">
         <label>
           Item: <input name="name" />
         </label>
         <button type="submit" name="_action" value="create">
           Add
         </button>
-      </Form>
+      </fetcher.Form>
+      <button onClick={handleAddCheckedItems}>Add checked items</button>
     </>
   );
 }
 
-function QuickAddItem({ id, name }: { id: string; name: string }) {
+function QuickAddItem({
+  id,
+  name,
+  onCheckItem,
+}: {
+  id: string;
+  name: string;
+  onCheckItem: (id: string) => void;
+}) {
   const fetcher = useFetcher();
-  const isDeleting = fetcher.submission?.formData.get("id") === id;
+  // const isDeleting = fetcher.submission?.formData.get("id") === id;
   return (
     <li>
       <fetcher.Form replace method="post" className="flex">
         <input type="hidden" name="id" value={id} />
+        <input type="checkbox" onChange={() => onCheckItem(id)} />
         <span>{name}</span>
         <button type="submit" aria-label="delete" name="_action" value="delete">
           x

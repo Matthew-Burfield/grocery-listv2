@@ -9,6 +9,18 @@ export function getGroceryItems({ userId }: { userId: string }) {
   });
 }
 
+export async function createGroceryItems({
+  userId,
+  items,
+}: {
+  userId: string,
+  items: Array<{ name: string, category?: string, isChecked?: boolean }>,
+}) {
+  // TODO: If I end up changing away from SQLLite, look into prisma "createMany"
+  const createAll = items.map(({ name, category, isChecked }) => createGroceryItem({ name, category, isChecked, userId }));
+  return Promise.all(createAll);
+};
+
 export function createGroceryItem({
   name,
   category,

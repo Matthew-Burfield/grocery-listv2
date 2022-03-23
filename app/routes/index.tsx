@@ -1,8 +1,9 @@
-import { Form, json, useLoaderData } from "remix";
+import { Form, json, redirect, useLoaderData } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { requireUserId } from "~/session.server";
 import {
   createGroceryItem,
+  createGroceryItems,
   deleteGroceryIetm,
   getGroceryItems,
   updateGroceryItem,
@@ -43,6 +44,16 @@ export const action: ActionFunction = async ({ request }) => {
     }
     case "delete": {
       return deleteGroceryIetm({ id, userId });
+    }
+    case "create_many": {
+      const itemsStr = formData.get("checkedItems") as string;
+      if (itemsStr) {
+        const items: Array<{ id: string; name: string; category: string }> =
+          JSON.parse(itemsStr);
+        await createGroceryItems({ userId, items });
+        return redirect("/");
+      }
+      return false;
     }
   }
 };
