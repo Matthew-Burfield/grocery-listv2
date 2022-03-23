@@ -1,8 +1,8 @@
-import { ActionFunction, Form, json, useLoaderData } from "remix";
+import { Form, json, useFetcher, useLoaderData } from "remix";
+import type { LoaderFunction, ActionFunction } from "remix";
 import invariant from "tiny-invariant";
 import { getQuickAddList } from "~/models/quick-add-list.server";
 import { requireUserId } from "~/session.server";
-import type { LoaderFunction } from "remix";
 import {
   createQuickAddListItem,
   deleteQuickAddListItem,
@@ -74,7 +74,7 @@ export default function QuickAddDetailsPage() {
       <h2>{data.quickAddList.name}</h2>
       <ul>
         {data.quickAddList.items.map((item) => (
-          <li key={item.id}>{item.name}</li>
+          <QuickAddItem key={item.id} id={item.id} name={item.name} />
         ))}
       </ul>
       <Form replace method="post">
@@ -82,9 +82,25 @@ export default function QuickAddDetailsPage() {
           Item: <input name="name" />
         </label>
         <button type="submit" name="_action" value="create">
-          Submit
+          Add
         </button>
       </Form>
     </>
+  );
+}
+
+function QuickAddItem({ id, name }: { id: string; name: string }) {
+  const fetcher = useFetcher();
+  const isDeleting = fetcher.submission?.formData.get("id") === id;
+  return (
+    <li>
+      <fetcher.Form replace method="post" className="flex">
+        <input type="hidden" name="id" value={id} />
+        <span>{name}</span>
+        <button type="submit" aria-label="delete" name="_action" value="delete">
+          x
+        </button>
+      </fetcher.Form>
+    </li>
   );
 }

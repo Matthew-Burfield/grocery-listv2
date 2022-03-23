@@ -38,14 +38,14 @@ export function updateQuickAddListItem({
   id: string;
   data: Prisma.QuickAddItemUpdateInput;
 }) {
-  return prisma.groceryItem.update({
+  return prisma.quickAddItem.update({
     data,
     where: { id },
   });
 }
 
 export function deleteQuickAddListItem({ id }: { id: string }) {
-  return prisma.groceryItem.deleteMany({
+  return prisma.quickAddItem.deleteMany({
     where: { id },
   });
 }
