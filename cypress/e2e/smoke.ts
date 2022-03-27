@@ -30,7 +30,7 @@ describe("smoke tests", () => {
       name: faker.lorem.words(1),
     };
     cy.login();
-    cy.visit("/");
+    cy.visit("/portal");
 
     cy.findByLabelText(/item:/i).type(testGroceryItem.name);
     // cy.findByText("No notes yet");
