@@ -1,5 +1,13 @@
 import { prisma } from "~/db.server";
 
+export function getQuickAddLists({ userId }: { userId: string }) {
+  return prisma.quickAddList.findMany({
+    where: { userId },
+    orderBy: { name: "asc" },
+    select: { id: true, name: true, _count: { select: { items: true }} },
+  });
+}
+
 export function getQuickAddList({
   userId,
   id,
