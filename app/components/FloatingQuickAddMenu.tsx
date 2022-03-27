@@ -23,8 +23,8 @@ export default function FloatingQuickAddMenu() {
           flexDirection: "column",
         }}
       >
-        <Link to="/quick-add/new">New "quick add" list</Link>
-        <Link to="/quick-add">Select "quick add" list</Link>
+        <Link to="/portal/quick-add/new">New "quick add" list</Link>
+        <Link to="/portal/quick-add">Select "quick add" list</Link>
         <Form action="/logout" method="post">
           <button type="submit">Logout</button>
         </Form>

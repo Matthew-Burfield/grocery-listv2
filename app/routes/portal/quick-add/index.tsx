@@ -21,7 +21,7 @@ export default function QuickAddIndexPage() {
           <li key={quickAddList.id}>
             <Link
               to={{
-                pathname: `/quick-add/${quickAddList.id}`,
+                pathname: `/portal/quick-add/${quickAddList.id}`,
               }}
             >
               {`${quickAddList.name} (${quickAddList._count.items} items)`}

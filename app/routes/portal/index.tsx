@@ -10,7 +10,6 @@ import {
 } from "~/models/grocery-item.server";
 // import { useUser } from "~/utils";
 import React from "react";
-import FloatingQuickAddMenu from "~/components/FloatingQuickAddMenu";
 import { GroceryItem } from "~/components/GroceryItem";
 
 type LoaderData = {
@@ -63,7 +62,7 @@ export default function Index() {
   // const user = useUser();
   const formRef = React.useRef<HTMLFormElement>(null);
   return (
-    <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
+    <>
       <h1>Grocery List</h1>
       <ul>
         {data.groceryItems
@@ -87,7 +86,6 @@ export default function Index() {
             <GroceryItem key={item.id} {...item} />
           ))}
       </ul>
-      <FloatingQuickAddMenu />
-    </main>
+    </>
   );
 }
